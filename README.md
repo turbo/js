@@ -6,6 +6,8 @@ turbo.js is compatible with all browsers (even IE when not using ES6 template st
 
 **For a live demo and short intro, please visit [turbo.github.io](http://turbo.github.io).**
 
+![](http://i.imgur.com/BiiQSzP.png)
+
 ### Example 1
 
 For this example, which can also be found at the aforementioned website, we are going to perform a simple calculation on a big-ish array of values.
