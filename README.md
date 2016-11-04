@@ -2,11 +2,13 @@
 
 turbo.js is a small library that makes it easier to perform complex calculations that can be done in parallel. The actual calculation performed (the *kernel* executed) uses the GPU for execution. This enables you to work on an array of values all at once.
 
-turbo.js is compatible with all browsers (even IE when not using ES6 template strings) and most desktop and mobile GPUs. For a live demo and short intro, please visit [turbo.github.io](http://turbo.github.io).
+turbo.js is compatible with all browsers (even IE when not using ES6 template strings) and most desktop and mobile GPUs. 
+
+**For a live demo and short intro, please visit [turbo.github.io](http://turbo.github.io).**
 
 ### Example 1
 
-For this example, which can also be found at the beforementioned website, we are going to perform a simple calculation on a big-ish array of values.
+For this example, which can also be found at the aforementioned website, we are going to perform a simple calculation on a big-ish array of values.
 
 turbo.js only has two functions that can be called by your code. Both are contained within the `turbojs` object. If this object is not initialized, something went wrong. So the first step is to check for turbo.js support. You can optionally check for exceptions thrown by turbo.js, which will provide further details on the error.
 
@@ -59,20 +61,20 @@ if (turbojs) {
 The console should now display `[0, 4, 8, 12, 16]`. That was easy, wasn't it? Let's break done what we've done:
 
 - `turbojs.run`'s first parameter is the previously allocated memory. The second parameter is the code that will be executed for each value in the array.
-- The code is written in an extension of C called GLSL. If you are not familiar with it, there is some good documentation on the internet. If you now C (or JS and know what types are), you'll pick it up in no time.
+- The code is written in an extension of C called GLSL. If you are not familiar with it, there is some good documentation on the internet. If you know C (or JS and know what types are), you'll pick it up in no time.
 - The kernel code here consists just of the main function, which takes no parameters. However, kernels can have any number of functions (except zero).
 - The `read()` function reads the current input value.
 - `${nFactor}` is substituted by the value of `nFactor`. Since GLSL expects numerical constant expressions to be typed, we append a `.` to mark it as a float. Otherwise the GLSL compiler will throw a type error.
-- `commit()` writes the result back to memory. You can `commit` from any function, but it is good practise to do so from the last line of the `main` function.
+- `commit()` writes the result back to memory. You can `commit` from any function, but it is good practice to do so from the last line of the `main` function.
 
 ### Example 2: Working with vectors
 
-That's great. But sometimes you need to return more than a single value from each operation. Well, it might no look like it, but we've been doing that all along. Both `commit` and `read` actually work on 4-dimensional vectors. To break it down:
+That's great. But sometimes you need to return more than a single value from each operation. Well, it might not look like it, but we've been doing that all along. Both `commit` and `read` actually work on 4-dimensional vectors. To break it down:
 
 - `vec4 read()` returns the GLSL data type `vec4`.
 - `void commit(vec4)` takes a `vec4` and writes it to memory
 
-A `vec4` is basically just an array. You could say it's akin to `vec4 foobar = {r:0, g:0, b:0, a:0}` in JS, but it's much more similar to JavaScript [`SIMD`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD)'s `Float32x4`.
+A `vec4` is basically just an array. You could say it's akin to `foobar = {r:0, g:0, b:0, a:0}` in JS, but it's much more similar to JavaScript [`SIMD`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD)'s `Float32x4`.
 
 The nice thing about GLSL is that all operations are overloaded so that they can work with vectors without the need to deal with each element individually, so
 
@@ -159,7 +161,7 @@ function testTurbo() {
 }
 ```
 
-Notice how easy the JS code can be translated to GLSL and vice versa, as long as no exclusive paradigms are used. Of course this example is not the optimal algorithm in neither JS or GLSL, but this is just for comparison.
+Notice how easy the JS code can be translated to GLSL and vice versa, as long as no exclusive paradigms are used. Of course this example is not the optimal algorithm in JS or GLSL, this is just for comparison.
 
 ### Example 3: Debugging
 
