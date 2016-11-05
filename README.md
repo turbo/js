@@ -34,7 +34,7 @@ We now have an array with 1,000,000 elements. Let's fill it with some data.
 
 ```js
 if (turbojs) {
-  var foo = turbojs.alloc(5e6);
+  var foo = turbojs.alloc(1e6);
   
   for (var i = 0; i < 1e6; i++) foo.data[i] = i;
   
