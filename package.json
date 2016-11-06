@@ -1,0 +1,20 @@
+{
+  "name": "turbojs",
+  "version": "1.0.1",
+  "description": "GPGPU for the web.",
+  "main": "turbo.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turbo/js.git"
+  },
+  "keywords": [
+    "webgl",
+    "gpgpu"
+  ],
+  "author": "turbo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/turbo/js/issues"
+  },
+  "homepage": "https://github.com/turbo/js#readme"
+}
