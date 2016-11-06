@@ -1,7 +1,22 @@
-(function() {
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.turbojs = factory();
+  }
+}(this, function () {
+
 	// turbo.js
 	// (c) turbo - github.com/turbo
 	// MIT licensed
+
 	"use strict";
 
 	var gl = document.createElement('canvas').getContext('experimental-webgl', {alpha : false, antialias : false});
@@ -82,7 +97,7 @@
 		return texture;
 	}
 
-	window.turbojs = {
+	return {
 		// run code against a pre-allocated array
 		run : function(ipt, code) {
 			var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -168,4 +183,6 @@
 			};
 		}
 	};
-})();
+
+}));
+
