@@ -18,6 +18,8 @@ First, include turbo.js in your site:
 <script src="https://turbo.github.io/js/turbo.js"></script>
 ```
 
+or pull [`turbojs`](https://www.npmjs.com/package/turbojs) via npm to use it in your project.
+
 turbo.js only has two functions that can be called by your code. Both are contained within the `turbojs` object. If this object is not initialized, something went wrong. So the first step is to check for turbo.js support. You can optionally check for exceptions thrown by turbo.js, which will provide further details on the error.
 
 ```js
