@@ -12,6 +12,12 @@ turbo.js is compatible with all browsers (even IE when not using ES6 template st
 
 For this example, which can also be found at the aforementioned website, we are going to perform a simple calculation on a big-ish array of values.
 
+First, include turbo.js in your site:
+
+```html
+<script src="https://turbo.github.io/js/turbo.js"></script>
+```
+
 turbo.js only has two functions that can be called by your code. Both are contained within the `turbojs` object. If this object is not initialized, something went wrong. So the first step is to check for turbo.js support. You can optionally check for exceptions thrown by turbo.js, which will provide further details on the error.
 
 ```js
