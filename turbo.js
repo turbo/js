@@ -1,16 +1,16 @@
 (function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    // AMD. Register as an anonymous module.
-    define([], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    // Node. Does not work with strict CommonJS, but
-    // only CommonJS-like environments that support module.exports,
-    // like Node.
-    module.exports = factory();
-  } else {
-    // Browser globals (root is window)
-    root.turbojs = factory();
-  }
+	if (typeof define === 'function' && define.amd) {
+		// AMD. Register as an anonymous module.
+		define([], factory);
+	} else if (typeof module === 'object' && module.exports) {
+		// Node. Does not work with strict CommonJS, but
+		// only CommonJS-like environments that support module.exports,
+		// like Node.
+		module.exports = factory();
+	} else {
+		// Browser globals (root is window)
+		root.turbojs = factory();
+	}
 }(this, function () {
 
 	// turbo.js
@@ -19,13 +19,28 @@
 
 	"use strict";
 
-	var gl = document.createElement('canvas').getContext('experimental-webgl', {alpha : false, antialias : false});
+	// Mozilla reference init implementation
+	var initGLFromCanvas = function(canvas) {
+		var gl = null;
+		var attr = {alpha : false, antialias : false};
+
+		// Try to grab the standard context. If it fails, fallback to experimental.
+		gl = canvas.getContext("webgl", attr) || canvas.getContext("experimental-webgl", attr);
+
+		// If we don't have a GL context, give up now
+		if (!gl)
+			throw new Error("turbojs: Unable to initialize WebGL. Your browser may not support it.");
+
+		return gl;
+	}
+
+	var gl = initGLFromCanvas(document.createElement('canvas'));
 
 	// turbo.js requires a 32bit float vec4 texture. Some systems only provide 8bit/float
 	// textures. A workaround is being created, but turbo.js shouldn't be used on those
 	// systems anyway.
 	if (!gl.getExtension('OES_texture_float'))
-		throw new Error('turbojs requires OES_texture_float extension.');
+		throw new Error('turbojs: Required texture format OES_texture_float not supported.');
 
 	// GPU texture buffer from JS typed array
 	function newBuffer(data, f, e) {
@@ -76,7 +91,7 @@
 	// This should not fail.
 	if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS))
 		throw new Error(
-			"\nERROR: Could not build internal vertex shader (fatal).\n" + "\n" +
+			"\nturbojs: Could not build internal vertex shader (fatal).\n" + "\n" +
 			"INFO: >REPORT< THIS. That's our fault!\n" + "\n" +
 			"--- CODE DUMP ---\n" + vertexShaderCode + "\n\n" +
 			"--- ERROR LOG ---\n" + gl.getShaderInfoLog(vertexShader)
@@ -130,7 +145,7 @@
 			gl.linkProgram(program);
 
 			if (!gl.getProgramParameter(program, gl.LINK_STATUS))
-				throw new Error('ERROR: Could not initialize shaders (fatal).\n');
+				throw new Error('turbojs: Failed to link GLSL program code.');
 
 			var uTexture = gl.getUniformLocation(program, 'u_texture');
 			var aPosition = gl.getAttribLocation(program, 'position');
@@ -149,10 +164,11 @@
 
 			gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, nTexture, 0);
 
+			// Test for mobile bug MDN->WebGL_best_practices, bullet 7
 			var frameBufferStatus = (gl.checkFramebufferStatus(gl.FRAMEBUFFER) == gl.FRAMEBUFFER_COMPLETE);
 
 			if (!frameBufferStatus)
-				throw new Error('ERROR: (fatal): ' + frameBufferStatus.message);
+				throw new Error('turbojs: Error attaching float texture to framebuffer. Your device is probably incompatible. Error info: ' + frameBufferStatus.message);
 
 			gl.bindTexture(gl.TEXTURE_2D, texture);
 			gl.activeTexture(gl.TEXTURE0);
@@ -174,7 +190,7 @@
 			// A sane limit for most GPUs out there.
 			// JS falls apart before GLSL limits could ever be reached.
 			if (sz > 16777216)
-				throw new Error("Whoops, the maximum array size is exceeded!");
+				throw new Error("turbojs: Whoops, the maximum array size is exceeded!");
 
 			var ns = Math.pow(Math.pow(2, Math.ceil(Math.log(sz) / 1.386) - 1), 2);
 			return {
