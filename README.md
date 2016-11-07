@@ -2,7 +2,7 @@
 
 turbo.js is a small library that makes it easier to perform complex calculations that can be done in parallel. The actual calculation performed (the *kernel* executed) uses the GPU for execution. This enables you to work on an array of values all at once.
 
-turbo.js is compatible with all browsers (even IE when not using ES6 template strings) and most desktop and mobile GPUs. 
+turbo.js is compatible with all browsers (even IE when not using ES6 template strings) and most desktop and mobile GPUs.
 
 **For a live demo and short intro, please visit [turbo.github.io](http://turbo.github.io).**
 
@@ -43,9 +43,9 @@ We now have an array with 1,000,000 elements. Let's fill it with some data.
 ```js
 if (turbojs) {
   var foo = turbojs.alloc(1e6);
-  
+
   for (var i = 0; i < 1e6; i++) foo.data[i] = i;
-  
+
   // print first five elements
   console.log(foo.data.subarray(0, 5));
 }
@@ -200,3 +200,13 @@ This will generate two errors. The first one is `bar` being undefined. The secon
 - In addition to error checking, do a sanity check using a small dataset and a simple kernel. If the numbers don't check out, fall back to JS.
 - I haven't tried it, but I guess you can adapt [glsl-transpiler](https://github.com/stackgl/glsl-transpiler) to create JS fallback code automatically.
 - Consider if you *really* need turbo.js. Optimize your *algorithm* (not code) first. Consider using JS SIMD. turbo.js can't be used for non-parallel workloads.
+
+Make sure to familiarize yourself with the GLSL standard, which can be found at [OpenGL.org](https://www.opengl.org/registry/doc/GLSLangSpec.4.40.pdf).
+
+Follow best practices to reduce your algorithm complexity. MDN adds:
+
+> Simpler shaders perform better than complex ones. In particular, if you can remove an if statement from a shader, that will make it run faster. Division and math functions like `log()` should be considered expensive too.
+
+Many C shorthands apply to GLSL. Having said that, this also applies:
+
+> However, nowadays even mobile devices possess powerful GPUs that are capable of running even relatively complex shader programs. Moreover, because shaders are compiled, the eventual machine code that actually runs on the hardware may be highly optimized. What may seem like an expensive function call may in fact compile into only few (or even a single) machine instructions. This is particularly true for GLSL functions that typically operate on vectors, such as `normalize()`, `dot()` and `mix()`. The best advice in that regard is to use the built-in functions, rather than try to implement, for example, one's own version of a dot-product or linear interpolation, which may in fact compile to larger and less optimized machine code. Finally, it is important to keep in mind that GPUs are constructed to do complex mathematical calculations in hardware, and therefore, may support math functions, such as `sin()`, `cos()` and other, through dedicated machine instructions.
