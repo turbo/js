@@ -1,4 +1,4 @@
-# [![](http://i.imgur.com/rb8oPur.png)](http://turbo.github.io)
+# [![](https://i.imgur.com/rb8oPur.png)](http://turbo.github.io)
 
 turbo.js is a small library that makes it easier to perform complex calculations that can be done in parallel. The actual calculation performed (the *kernel* executed) uses the GPU for execution. This enables you to work on an array of values all at once.
 
@@ -6,7 +6,7 @@ turbo.js is compatible with all browsers (even IE when not using ES6 template st
 
 **For a live demo and short intro, please visit [turbo.github.io](http://turbo.github.io).**
 
-![](http://i.imgur.com/BiiQSzP.png)
+![](https://i.imgur.com/BiiQSzP.png)
 
 ### Example 1
 
@@ -190,7 +190,7 @@ if (turbojs) {
 
 This will generate two errors. The first one is `bar` being undefined. The second one is a type mismatch: `commit` expects a vector, but we've just given it a float. Opening your browser's console will reveal the error:
 
-![](http://i.imgur.com/49Z6Fei.png)
+![](https://i.imgur.com/49Z6Fei.png)
 
 ### Further considerations
 
