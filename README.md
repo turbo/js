@@ -15,7 +15,7 @@ For this example, which can also be found at the aforementioned website, we are 
 First, include turbo.js in your site:
 
 ```html
-<script src="https://turbo.github.io/js/turbo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/turbojs"></script>
 ```
 
 or pull [`turbojs`](https://www.npmjs.com/package/turbojs) via npm to use it in your project.
